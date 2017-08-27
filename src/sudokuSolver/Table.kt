@@ -1,3 +1,3 @@
 package sudokuSolver
 
-data class Table(var table: Array<Array<Byte>>)
+data class Table(var table: List<List<Byte>>)
