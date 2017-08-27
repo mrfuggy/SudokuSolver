@@ -1,5 +1,7 @@
 package sudokuSolver
 
+import sudokuSolver.cellChanges.ZeroChange
+
 class SudokuSolver(private var sudokuTable: Table) {
 
     private val Strategies: MutableList<SudokuStrategy> = mutableListOf()
@@ -13,16 +15,14 @@ class SudokuSolver(private var sudokuTable: Table) {
     fun Solve() {
         var changed = false
         while (!changed) {
-            changed = false
-            for (strategy in Strategies) {
-                strategy.updateTable(sudokuTable)
-                val change = strategy.getAnyChange()
-                if (change.hasChange()) {
-                    sudokuTable = change.apply(sudokuTable)
-                    changed = true
-                    break
-                }
-            }
+            val change = Strategies
+                    .map {
+                        it.updateTable(sudokuTable)
+                        it.getAnyChange()
+                    }
+                    .firstOrDefault({ ZeroChange() }) { it.hasChange() }
+            changed = change.hasChange()
+            sudokuTable = change.apply(sudokuTable)
         }
     }
 }
