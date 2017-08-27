@@ -3,15 +3,17 @@ package sudokuSolver.sudokuStrategies
 import sudokuSolver.CellChange
 import sudokuSolver.SudokuStrategy
 import sudokuSolver.Table
+import sudokuSolver.cellChanges.CompositeChange
+import sudokuSolver.cellChanges.ZeroChange
 
 class CompositeStrategy : SudokuStrategy {
 
-    private lateinit var table: Table
+    private lateinit var Table: Table
     private val Strategies: MutableList<SudokuStrategy> = mutableListOf()
-    private var changeCount = 0
+    private var ChangeCount = 0
 
     override fun updateTable(sudokuTable: Table) {
-        table = sudokuTable
+        Table = sudokuTable
     }
 
     fun addStrategy(sudokuStrategy: SudokuStrategy): CompositeStrategy {
@@ -20,10 +22,15 @@ class CompositeStrategy : SudokuStrategy {
     }
 
     override fun incChange() {
-        changeCount++
+        ChangeCount++
     }
 
     override fun getAnyChange(): CellChange {
-        TODO("not implemented")
+        return Strategies
+                .map { it.getAnyChange() }
+                .firstOrNull { it.hasChange() }
+                ?.let { CompositeChange(it, this) }
+                ?: ZeroChange()
     }
 }
+
