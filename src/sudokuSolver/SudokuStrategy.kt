@@ -1,5 +1,7 @@
 package sudokuSolver
 
 interface SudokuStrategy {
-    fun UpdateTable(sudokuTable: Table)
+    fun updateTable(sudokuTable: Table)
+    fun getAnyChange(): CellChange
+    fun incChange()
 }
