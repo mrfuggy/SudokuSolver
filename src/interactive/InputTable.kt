@@ -14,7 +14,7 @@ fun main(args: Array<String>) {
     val sudokuTable = loader.load()
 
     val sudokuSolver = SudokuSolver(sudokuTable)
-    sudokuSolver.Solve()
+    sudokuSolver.solve()
 
     val viewer: SudokuViewer = SudokuConsoleViewer()
     viewer.view(sudokuSolver.getTable())

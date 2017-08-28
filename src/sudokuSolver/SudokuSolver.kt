@@ -12,7 +12,7 @@ class SudokuSolver(private var sudokuTable: Table) {
 
     fun getTable() = sudokuTable
 
-    fun Solve() {
+    fun solve() {
         var changed = false
         while (!changed) {
             val change = Strategies
@@ -20,7 +20,8 @@ class SudokuSolver(private var sudokuTable: Table) {
                         it.updateTable(sudokuTable)
                         it.getAnyChange()
                     }
-                    .firstOrDefault({ ZeroChange() }) { it.hasChange() }
+                    .firstOrNull { it.hasChange() }
+                    ?: ZeroChange()
             changed = change.hasChange()
             sudokuTable = change.apply(sudokuTable)
         }

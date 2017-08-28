@@ -1,13 +1,13 @@
 package interactive.loader
 
+import com.sun.javaws.exceptions.InvalidArgumentException
+
 class SudokuStringLoader(private val line: String?) {
     fun readList(): List<Byte> {
-        while (true) {
-            if (line != null && line.length == 9) {
-                return parseRow(line)
-            } else {
-                println("Line length must be 9. Please repeat")
-            }
+        if (line != null && line.length == 9) {
+            return parseRow(line)
+        } else {
+            throw InvalidArgumentException(arrayOf("Line length must be 9."))
         }
     }
 
