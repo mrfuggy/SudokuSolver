@@ -2,11 +2,9 @@ package sudokuSolver.sudokuStrategies.hiddenSingle
 
 import sudokuSolver.CellChange
 import sudokuSolver.SudokuStrategy
-import sudokuSolver.sudokuStrategies.BaseSudokuStrategy
+import sudokuSolver.Table
 
-class HiddenSingleColumnStrategy : BaseSudokuStrategy(), SudokuStrategy {
+class HiddenSingleColumnStrategy : BaseHiddenSingleStrategy(Table::getColumnEnumerator), SudokuStrategy {
 
-    override fun getAnyChange(): CellChange {
-        TODO("not implemented")
-    }
+    override fun getAnyChange(): CellChange = getAnyChange(this)
 }

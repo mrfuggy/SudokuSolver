@@ -6,8 +6,6 @@ class Table {
     private val Candidates: Map<Point, Set<Byte>>
     private val Matrix: Map<Point, Byte>
 
-    private val EmptyCell = 0.toByte()
-
     constructor(table: List<List<Byte>>) {
         SudokuTable = table
         Candidates = fillCandidates()
@@ -25,9 +23,9 @@ class Table {
     }
 
     private fun validate() = Matrix
-                .filter { it.value == EmptyCell }
-                .any { getCandidates(it.key.i, it.key.j).isEmpty() }
-                .not()
+            .filter { it.value == EmptyCell }
+            .any { getCandidates(it.key.i, it.key.j).isEmpty() }
+            .not()
 
     private fun getCandidates(i: Int, j: Int) = Candidates.getValue(Point(i, j))
 
@@ -35,18 +33,32 @@ class Table {
         TODO("not implemented")
     }
 
-    fun getCellEnumerator() =
-            Matrix
-                    .asIterable()
-                    .map { Cell(it.key, it.value, Candidates[it.key].orEmpty()) }
+    fun getCellEnumerator() = Matrix
+            .map { getCell(it) }
+
+    fun getRowEnumerator(i: Int) = Matrix
+            .filter { it.key.i == i }
+            .map { getCell(it) }
+
+    fun getColumnEnumerator(j: Int) = Matrix
+            .filter { it.key.j == j }
+            .map { getCell(it) }
+
+    fun getBoxEnumerator(boxNumber: Int) = Matrix
+            .filter { it.key.getBoxNumber() == boxNumber }
+            .map { getCell(it) }
+
+    private fun getCell(it: Map.Entry<Point, Byte>) =
+            Cell(it.key, it.value, Candidates[it.key].orEmpty())
 
 
     fun hasEmptyCell() = SudokuTable
-                .flatten()
-                .any { it == EmptyCell }
+            .flatten()
+            .any { it == EmptyCell }
 
     companion object {
         fun empty() = Table(listOf())
+        val EmptyCell = 0.toByte()
     }
 
     fun insert(index: Point, value: Byte): Table {
@@ -107,17 +119,15 @@ private fun List<List<Byte>>.insert(index: Point, value: Byte): List<List<Byte>>
     return table
 }
 
-private fun <E> Collection<Collection<E>>.getMatrix(): Map<Point, E> {
-    return this
-            .withIndex()
-            .flatMap { (rowIndex, row)
-                ->
-                row
-                        .withIndex()
-                        .map { (columnIndex, value)
-                            ->
-                            Pair(Point(rowIndex, columnIndex), value)
-                        }
-            }
-            .toMap()
-}
+private fun <E> Collection<Collection<E>>.getMatrix(): Map<Point, E> = this
+        .withIndex()
+        .flatMap { (rowIndex, row)
+            ->
+            row
+                    .withIndex()
+                    .map { (columnIndex, value)
+                        ->
+                        Pair(Point(rowIndex, columnIndex), value)
+                    }
+        }
+        .toMap()
