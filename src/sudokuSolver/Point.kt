@@ -1,7 +1,7 @@
 package sudokuSolver
 
-data class Point(val i: Int, val j: Int) {
-    fun getBoxNumber(): Int = getBoxIndex(i) + 3 * getBoxIndex(j)
+data class Point(val rowIndex: Int, val columnIndex: Int) {
+    fun getBoxIndex(): Int = getBoxIndex(rowIndex) + 3 * getBoxIndex(columnIndex)
 
     private fun getBoxIndex(index: Int) =
             when (index) {

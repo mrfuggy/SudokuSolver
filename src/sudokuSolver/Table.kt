@@ -8,8 +8,8 @@ class Table {
 
     constructor(table: List<List<Byte>>) {
         SudokuTable = table
-        Candidates = fillCandidates()
         Matrix = table.getMatrix()
+        Candidates = fillCandidates(Matrix)
 
         if (!validate()) {
             throw IllegalStateException("sudoku invalid")
@@ -24,40 +24,55 @@ class Table {
 
     private fun validate() = Matrix
             .filter { it.value == EmptyCell }
-            .any { getCandidates(it.key.i, it.key.j).isEmpty() }
+            .any { getCandidates(it.key.rowIndex, it.key.columnIndex).isEmpty() }
             .not()
 
     private fun getCandidates(i: Int, j: Int) = Candidates.getValue(Point(i, j))
 
-    private fun fillCandidates(): Map<Point, Set<Byte>> {
-        TODO("not implemented")
-    }
+    private fun fillCandidates(matrix: Map<Point, Byte>): Map<Point, Set<Byte>> =
+            matrix
+                    .map { cell ->
+                        if (cell.value == EmptyCell) {
+                            Pair(cell.key, setOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8, 9)
+                                    - matrix.getRowValues(cell.key.rowIndex).forward { getValues(it) }
+                                    - matrix.getColumnValues(cell.key.columnIndex).forward { getValues(it) }
+                                    - matrix.getBoxValues(cell.key.getBoxIndex()).forward { getValues(it) })
+                        } else {
+                            Pair(cell.key, setOf())
+                        }
+                    }
+                    .toMap()
+
+    private fun getValues(values: Map<Point, Byte>): Set<Byte> = values
+            .map { it.value }
+            .filter { it != EmptyCell }
+            .distinct()
+            .toSet()
 
     fun getCellEnumerator() = Matrix
             .map { getCell(it) }
 
-    fun getRowEnumerator(i: Int) = Matrix
-            .filter { it.key.i == i }
+    fun getRowEnumerator(rowIndex: Int) = Matrix
+            .getRowValues(rowIndex)
             .map { getCell(it) }
 
-    fun getColumnEnumerator(j: Int) = Matrix
-            .filter { it.key.j == j }
+    fun getColumnEnumerator(columnIndex: Int) = Matrix
+            .getColumnValues(columnIndex)
             .map { getCell(it) }
 
-    fun getBoxEnumerator(boxNumber: Int) = Matrix
-            .filter { it.key.getBoxNumber() == boxNumber }
+    fun getBoxEnumerator(boxIndex: Int) = Matrix
+            .getBoxValues(boxIndex)
             .map { getCell(it) }
 
     private fun getCell(it: Map.Entry<Point, Byte>) =
             Cell(it.key, it.value, Candidates[it.key].orEmpty())
 
 
-    fun hasEmptyCell() = SudokuTable
-            .flatten()
-            .any { it == EmptyCell }
+    fun hasEmptyCell() = Matrix
+            .any { it.value == EmptyCell }
 
     companion object {
-        fun empty() = Table(listOf())
+        val EmptyTable = Table(listOf())
         val EmptyCell = 0.toByte()
     }
 
@@ -75,19 +90,28 @@ class Table {
     }
 }
 
+private fun Map<Point, Byte>.getBoxValues(boxIndex: Int) = this
+        .filter { it.key.getBoxIndex() == boxIndex }
+
+private fun Map<Point, Byte>.getColumnValues(columnIndex: Int) = this
+        .filter { it.key.columnIndex == columnIndex }
+
+private fun Map<Point, Byte>.getRowValues(rowIndex: Int) = this
+        .filter { it.key.rowIndex == rowIndex }
+
 private fun Map<Point, Set<Byte>>.excludeAll(index: Point, value: Byte) = this
         .excludeInColumn(index, value)
         .excludeInRow(index, value)
         .excludeInBox(index, value)
 
 private fun Map<Point, Set<Byte>>.excludeInRow(index: Point, value: Byte) = this
-        .excludeIn(index.i, value) { it.i }
+        .excludeIn(index.rowIndex, value) { it.rowIndex }
 
 private fun Map<Point, Set<Byte>>.excludeInColumn(index: Point, value: Byte) = this
-        .excludeIn(index.i, value) { it.j }
+        .excludeIn(index.columnIndex, value) { it.columnIndex }
 
 private fun Map<Point, Set<Byte>>.excludeInBox(index: Point, value: Byte) = this
-        .excludeIn(index.getBoxNumber(), value) { it.getBoxNumber() }
+        .excludeIn(index.getBoxIndex(), value) { it.getBoxIndex() }
 
 private fun Map<Point, Set<Byte>>.excludeIn(index: Int, value: Byte, intoGroup: (Point) -> Int) = this
         .mapValues {
@@ -100,7 +124,7 @@ private fun Map<Point, Set<Byte>>.excludeIn(index: Int, value: Byte, intoGroup: 
 private fun Map<Point, Set<Byte>>.excludeExact(index: Point, value: Byte) = this
         .mapValues {
             when {
-                it.key.i == index.i && it.key.j == index.j -> it.value.filter { it != value }.toSet()
+                it.key.rowIndex == index.rowIndex && it.key.columnIndex == index.columnIndex -> it.value.filter { it != value }.toSet()
                 else -> it.value
             }
         }
@@ -115,7 +139,7 @@ private fun Map<Point, Byte>.insert(index: Point, value: Byte) = this
 
 private fun List<List<Byte>>.insert(index: Point, value: Byte): List<List<Byte>> {
     val table = this.map { it.toMutableList() }.toMutableList()
-    table[index.i][index.j] = value
+    table[index.rowIndex][index.columnIndex] = value
     return table
 }
 

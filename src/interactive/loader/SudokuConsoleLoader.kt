@@ -15,7 +15,7 @@ class SudokuConsoleLoader : SudokuLoader {
     private fun repeatRead(): List<Byte> {
         while (true) {
             try {
-                return SudokuStringLoader(readLine()).readList()
+                return SudokuStringLoader(readLine(), 9).readList()
             } catch (ex: InvalidArgumentException) {
                 println(ex.message)
             } catch (ex: NumberFormatException) {

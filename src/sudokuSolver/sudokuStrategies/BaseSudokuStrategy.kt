@@ -4,7 +4,7 @@ import sudokuSolver.Table
 
 open class BaseSudokuStrategy {
 
-    protected var SudokuTable: Table = sudokuSolver.Table.empty()
+    protected var SudokuTable: Table = sudokuSolver.Table.EmptyTable
 
     private var ChangeCount = 0
 

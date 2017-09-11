@@ -15,7 +15,7 @@ open class BaseHiddenSingleStrategy(private val getEnumeration: (Table, Int) -> 
                         .filter { it.value == Table.EmptyCell }
                         .filter {
                             index = it.index
-                            it.value == num.toByte()
+                            it.candidates.contains(num.toByte())
                         }
                         .count() == 1) {
                     return InsertChange(index, num.toByte(), strategy)

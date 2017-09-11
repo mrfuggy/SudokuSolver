@@ -8,6 +8,6 @@ class SudokuFileLoader(private val fileName: String) : SudokuLoader {
     override fun load(): Table {
         val file = File(fileName)
         val lines = file.readLines()
-        return Table(lines.map { s -> SudokuStringLoader(s).readList() })
+        return Table(lines.map { s -> SudokuStringLoader(s, 9).readList() })
     }
 }
