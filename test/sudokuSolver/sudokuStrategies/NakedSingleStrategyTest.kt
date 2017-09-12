@@ -1,34 +1,31 @@
 package sudokuSolver.sudokuStrategies
 
-import interactive.loader.SudokuStringLoader
 import interactive.viewer.SudokuStringViewer
 import org.testng.Assert.assertEquals
 import org.testng.annotations.BeforeTest
 import org.testng.annotations.Test
 import sudokuSolver.Table
-import sudokuSolver.batch
+import sudokuSolver.TestExtensions
 import sudokuSolver.cellChanges.InsertChange
 
 class NakedSingleStrategyTest {
 
     private var table: Table = Table.EmptyTable
     private var nakedSingleStrategy = NakedSingleStrategy()
+    private var stringViewer = SudokuStringViewer()
 
     @BeforeTest
     fun setup() {
-        nakedSingleStrategy = NakedSingleStrategy()
+        table = TestExtensions.getTable("039612000000735000020489063305000000700308002000000804260000070000807000000024950")
 
-        table = Table(SudokuStringLoader("039612000000735000020489063305000000700308002000000804260000070000807000000024950", 81)
-                .readList()
-                .asSequence()
-                .batch(9)
-                .toList())
+        nakedSingleStrategy = NakedSingleStrategy()
+        nakedSingleStrategy.updateTable(table)
+
+        stringViewer = SudokuStringViewer()
     }
 
     @Test(groups = arrayOf("NakedSingle"))
     fun shouldBeReturnInsertChanges() {
-        nakedSingleStrategy.updateTable(table)
-
         val actualChange = nakedSingleStrategy.getAnyChange()
 
         assertEquals(actualChange::class, InsertChange::class, "should be insert")
@@ -37,9 +34,6 @@ class NakedSingleStrategyTest {
 
     @Test(groups = arrayOf("NakedSingle"))
     fun shouldBeRightChange() {
-        nakedSingleStrategy.updateTable(table)
-        val stringViewer = SudokuStringViewer()
-
         val actualChange = nakedSingleStrategy.getAnyChange()
         val newTable = actualChange.apply(table)
         stringViewer.view(newTable)
@@ -50,11 +44,8 @@ class NakedSingleStrategyTest {
                 "should be change '1'")
     }
 
-    @Test(groups = arrayOf("NakedSingle"))
+    @Test(groups = arrayOf("NakedSingle", "Pilot"))
     fun shouldBeRightChangeThen() {
-        nakedSingleStrategy.updateTable(table)
-        val stringViewer = SudokuStringViewer()
-
         val change1 = nakedSingleStrategy.getAnyChange()
         val table1 = change1.apply(table)
         nakedSingleStrategy.updateTable(table1)
