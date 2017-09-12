@@ -7,25 +7,29 @@ import org.testng.annotations.Test
 import sudokuSolver.Table
 import sudokuSolver.TestExtensions
 import sudokuSolver.cellChanges.InsertChange
+import sudokuSolver.cellChanges.ZeroChange
 
 class NakedSingleStrategyTest {
 
     private var table: Table = Table.EmptyTable
+    private var tableWithoutChange: Table = Table.EmptyTable
     private var nakedSingleStrategy = NakedSingleStrategy()
     private var stringViewer = SudokuStringViewer()
 
     @BeforeTest
     fun setup() {
         table = TestExtensions.getTable("039612000000735000020489063305000000700308002000000804260000070000807000000024950")
+        tableWithoutChange = TestExtensions.getTable("901000040870000000543196287405300070000080000080005102000971800000000023050000401")
 
         nakedSingleStrategy = NakedSingleStrategy()
-        nakedSingleStrategy.updateTable(table)
 
         stringViewer = SudokuStringViewer()
     }
 
     @Test(groups = arrayOf("NakedSingle"))
     fun shouldBeReturnInsertChanges() {
+        nakedSingleStrategy.updateTable(table)
+
         val actualChange = nakedSingleStrategy.getAnyChange()
 
         assertEquals(actualChange::class, InsertChange::class, "should be insert")
@@ -33,7 +37,19 @@ class NakedSingleStrategyTest {
     }
 
     @Test(groups = arrayOf("NakedSingle"))
+    fun shouldBeReturnZeroChanges() {
+        nakedSingleStrategy.updateTable(tableWithoutChange)
+
+        val actualChange = nakedSingleStrategy.getAnyChange()
+
+        assertEquals(actualChange::class, ZeroChange::class, "should be zero")
+        assertEquals(actualChange.hasChange(), false, "should not have change")
+    }
+
+    @Test(groups = arrayOf("NakedSingle"))
     fun shouldBeRightChange() {
+        nakedSingleStrategy.updateTable(table)
+
         val actualChange = nakedSingleStrategy.getAnyChange()
         val newTable = actualChange.apply(table)
         stringViewer.view(newTable)
@@ -46,6 +62,8 @@ class NakedSingleStrategyTest {
 
     @Test(groups = arrayOf("NakedSingle", "Pilot"))
     fun shouldBeRightChangeThen() {
+        nakedSingleStrategy.updateTable(table)
+
         val change1 = nakedSingleStrategy.getAnyChange()
         val table1 = change1.apply(table)
         nakedSingleStrategy.updateTable(table1)
