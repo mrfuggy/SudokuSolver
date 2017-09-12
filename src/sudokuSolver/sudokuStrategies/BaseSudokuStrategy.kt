@@ -8,7 +8,7 @@ open class BaseSudokuStrategy {
 
     private var ChangeCount = 0
 
-    fun updateTable(sudokuTable: Table) {
+    open fun updateTable(sudokuTable: Table) {
         this.SudokuTable = sudokuTable
     }
 

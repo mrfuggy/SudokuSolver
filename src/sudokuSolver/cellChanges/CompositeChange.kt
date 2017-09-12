@@ -7,7 +7,7 @@ import sudokuSolver.sudokuStrategies.CompositeStrategy
 class CompositeChange(private val change: CellChange, private val strategy: CompositeStrategy) : CellChange {
     override fun apply(table: Table): Table {
         strategy.incChange()
-        TODO("not implemented")
+        return change.apply(table)
     }
 
     override fun hasChange() = change.hasChange()
