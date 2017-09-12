@@ -1,6 +1,7 @@
 package sudokuSolver.sudokuStrategies
 
 import interactive.loader.SudokuStringLoader
+import interactive.viewer.SudokuStringViewer
 import org.testng.Assert.assertEquals
 import org.testng.annotations.BeforeTest
 import org.testng.annotations.Test
@@ -37,15 +38,14 @@ class NakedSingleStrategyTest {
     fun shouldBeRightChange() {
         val testableStrategy = NakedSingleStrategy()
         testableStrategy.updateTable(table)
+        val stringViewer = SudokuStringViewer()
 
         val actualChange = testableStrategy.getAnyChange()
         val newTable = actualChange.apply(table)
-        val newTextTable = newTable
-                .getCellEnumerator()
-                .joinToString(separator = "") { it.value.toString() }
+        stringViewer.view(newTable)
 
         assertEquals(
-                newTextTable,
+                stringViewer.getString(),
                 "039612000000735000020489063305000000700308002000000804260000070000807000000124950",
                 "should be change '1'")
     }
@@ -54,6 +54,7 @@ class NakedSingleStrategyTest {
     fun shouldBeRightChangeThen() {
         val testableStrategy = NakedSingleStrategy()
         testableStrategy.updateTable(table)
+        val stringViewer = SudokuStringViewer()
 
         val change1 = testableStrategy.getAnyChange()
         val table1 = change1.apply(table)
@@ -62,24 +63,20 @@ class NakedSingleStrategyTest {
         val actualChange = testableStrategy.getAnyChange()
         val newTable = actualChange.apply(table1)
         testableStrategy.updateTable(newTable)
+        stringViewer.view(newTable)
 
-        val newTextTable = newTable
-                .getCellEnumerator()
-                .joinToString(separator = "") { it.value.toString() }
         assertEquals(
-                newTextTable,
+                stringViewer.getString(),
                 "039612000000735000020489063305000000700308002000000804260003070000807000000124950",
                 "should be change '3'")
 
         val actualChange2 = testableStrategy.getAnyChange()
         val newTable2 = actualChange2.apply(newTable)
+        stringViewer.view(newTable2)
 
-        val newTextTable2 = newTable2
-                .getCellEnumerator()
-                .joinToString(separator = "") { it.value.toString() }
         assertEquals(
-                newTextTable2,
-                "039612000000735000020489063305000000700308002000000804260000070000807000800124950",
+                stringViewer.getString(),
+                "039612000000735000020489063305000000700308002000000804260003070000807000800124950",
                 "should be change '8'")
     }
 }
