@@ -4,8 +4,8 @@ import com.sun.javaws.exceptions.InvalidArgumentException
 
 class SudokuStringLoader(private val line: String?, private val count: Int) {
     fun readList(): List<Byte> {
-        if (line != null && line.length == count) {
-            return parseRow(line)
+        return if (line != null && line.length == count) {
+            parseRow(line)
         } else {
             throw InvalidArgumentException(arrayOf("Line length must be {$count}."))
         }

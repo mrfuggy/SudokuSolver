@@ -28,7 +28,7 @@ class Table {
             .any { getCandidates(it.key.rowIndex, it.key.columnIndex).isEmpty() }
             .not()
 
-    private fun getCandidates(i: Int, j: Int) = Candidates.getValue(Point(i, j))
+    private fun getCandidates(rowIndex: Int, columnIndex: Int) = Candidates.getValue(Point(rowIndex, columnIndex))
 
     fun getCellEnumerator() = Matrix
             .getAllValues()

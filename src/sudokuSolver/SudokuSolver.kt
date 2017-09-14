@@ -14,7 +14,7 @@ class SudokuSolver(private var sudokuTable: Table) {
 
     fun solve() {
         var changed = false
-        while (!changed) {
+        while (!changed && sudokuTable.hasEmptyCell()) {
             val change = Strategies
                     .map {
                         it.updateTable(sudokuTable)

@@ -1,26 +1,18 @@
 package sudokuSolver.sudokuStrategies
 
-import interactive.viewer.SudokuStringViewer
 import org.testng.Assert.assertEquals
-import org.testng.annotations.BeforeTest
+import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
-import sudokuSolver.Table
-import sudokuSolver.TestExtensions
 
 class NakedSingleStrategyTest : StrategyTest() {
 
-    private var table: Table = Table.EmptyTable
-    private var tableWithoutChange: Table = Table.EmptyTable
+    private var table = getTable("039612000000735000020489063305000000700308002000000804260000070000807000000024950")
+    private var tableWithoutChange = getTable("901000040870000000543196287405300070000080000080005102000971800000000023050000401")
     private var nakedSingleStrategy = NakedSingleStrategy()
 
-    @BeforeTest
+    @BeforeMethod
     fun setup() {
-        table = TestExtensions.getTable("039612000000735000020489063305000000700308002000000804260000070000807000000024950")
-        tableWithoutChange = TestExtensions.getTable("901000040870000000543196287405300070000080000080005102000971800000000023050000401")
-
         nakedSingleStrategy = NakedSingleStrategy()
-
-        stringViewer = SudokuStringViewer()
     }
 
     @Test(groups = arrayOf("NakedSingle"))

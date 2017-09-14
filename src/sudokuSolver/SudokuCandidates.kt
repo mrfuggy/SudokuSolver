@@ -61,10 +61,12 @@ class SudokuCandidates {
                     .getAllValues()
                     .map { cell ->
                         if (cell.value == Table.EmptyCell) {
-                            Pair(cell.key, setOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8, 9)
-                                    - sudokuMatrix.getRowValues(cell.key.rowIndex).forward { getValues(it) }
-                                    - sudokuMatrix.getColumnValues(cell.key.columnIndex).forward { getValues(it) }
-                                    - sudokuMatrix.getBoxValues(cell.key.getBoxIndex()).forward { getValues(it) })
+                            Pair(
+                                    cell.key,
+                                    setOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8, 9)
+                                            - sudokuMatrix.getRowValues(cell.key.rowIndex).forward { getValues(it) }
+                                            - sudokuMatrix.getColumnValues(cell.key.columnIndex).forward { getValues(it) }
+                                            - sudokuMatrix.getBoxValues(cell.key.getBoxIndex()).forward { getValues(it) })
                         } else {
                             Pair(cell.key, setOf())
                         }

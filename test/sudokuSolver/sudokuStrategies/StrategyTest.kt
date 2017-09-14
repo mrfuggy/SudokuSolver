@@ -1,9 +1,11 @@
 package sudokuSolver.sudokuStrategies
 
+import interactive.loader.SudokuStringLoader
 import interactive.viewer.SudokuStringViewer
 import org.testng.Assert.assertEquals
 import sudokuSolver.SudokuStrategy
 import sudokuSolver.Table
+import sudokuSolver.batch
 import sudokuSolver.cellChanges.CompositeChange
 import sudokuSolver.cellChanges.InsertChange
 import sudokuSolver.cellChanges.ZeroChange
@@ -39,7 +41,11 @@ abstract class StrategyTest {
         assertEquals(actualChange.hasChange(), false, "should not have change")
     }
 
-    protected fun strategyApplyChangeTest(strategy: SudokuStrategy, tableData: Table, expected: String, message: String) {
+    protected fun strategyApplyChangeTest(
+            strategy: SudokuStrategy,
+            tableData: Table,
+            expected: String,
+            message: String) {
         strategy.updateTable(tableData)
 
         val actualChange = strategy.getAnyChange()
@@ -47,5 +53,14 @@ abstract class StrategyTest {
         stringViewer.view(newTable)
 
         assertEquals(stringViewer.getString(), expected, message)
+    }
+
+    protected fun getTable(line: String): Table {
+        return Table(
+                SudokuStringLoader(line, 81)
+                        .readList()
+                        .asSequence()
+                        .batch(9)
+                        .toList())
     }
 }
