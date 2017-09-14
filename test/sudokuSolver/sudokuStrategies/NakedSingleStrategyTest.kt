@@ -6,15 +6,12 @@ import org.testng.annotations.BeforeTest
 import org.testng.annotations.Test
 import sudokuSolver.Table
 import sudokuSolver.TestExtensions
-import sudokuSolver.cellChanges.InsertChange
-import sudokuSolver.cellChanges.ZeroChange
 
-class NakedSingleStrategyTest {
+class NakedSingleStrategyTest : StrategyTest() {
 
     private var table: Table = Table.EmptyTable
     private var tableWithoutChange: Table = Table.EmptyTable
     private var nakedSingleStrategy = NakedSingleStrategy()
-    private var stringViewer = SudokuStringViewer()
 
     @BeforeTest
     fun setup() {
@@ -28,34 +25,19 @@ class NakedSingleStrategyTest {
 
     @Test(groups = arrayOf("NakedSingle"))
     fun shouldBeReturnInsertChanges() {
-        nakedSingleStrategy.updateTable(table)
-
-        val actualChange = nakedSingleStrategy.getAnyChange()
-
-        assertEquals(actualChange::class, InsertChange::class, "should be insert")
-        assertEquals(actualChange.hasChange(), true, "should have change")
+        strategyInsertTest(nakedSingleStrategy, table)
     }
 
     @Test(groups = arrayOf("NakedSingle"))
     fun shouldBeReturnZeroChanges() {
-        nakedSingleStrategy.updateTable(tableWithoutChange)
-
-        val actualChange = nakedSingleStrategy.getAnyChange()
-
-        assertEquals(actualChange::class, ZeroChange::class, "should be zero")
-        assertEquals(actualChange.hasChange(), false, "should not have change")
+        strategyZeroTest(nakedSingleStrategy, tableWithoutChange)
     }
 
     @Test(groups = arrayOf("NakedSingle"))
     fun shouldBeRightChange() {
-        nakedSingleStrategy.updateTable(table)
-
-        val actualChange = nakedSingleStrategy.getAnyChange()
-        val newTable = actualChange.apply(table)
-        stringViewer.view(newTable)
-
-        assertEquals(
-                stringViewer.getString(),
+        strategyApplyChangeTest(
+                nakedSingleStrategy,
+                table,
                 "039612000000735000020489063305000000700308002000000804260000070000807000000124950",
                 "should be change '1'")
     }

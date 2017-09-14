@@ -1,19 +1,14 @@
 package sudokuSolver.sudokuStrategies
 
-import interactive.viewer.SudokuStringViewer
-import org.testng.Assert.assertEquals
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 import sudokuSolver.Table
 import sudokuSolver.TestExtensions
-import sudokuSolver.cellChanges.CompositeChange
-import sudokuSolver.cellChanges.InsertChange
-import sudokuSolver.cellChanges.ZeroChange
 import sudokuSolver.sudokuStrategies.hiddenSingle.HiddenSingleBoxStrategy
 import sudokuSolver.sudokuStrategies.hiddenSingle.HiddenSingleColumnStrategy
 import sudokuSolver.sudokuStrategies.hiddenSingle.HiddenSingleRowStrategy
 
-class HiddenSingleStrategyTest {
+class HiddenSingleStrategyTest : StrategyTest() {
 
     private var table: Table = Table.EmptyTable
     private var tableWithoutChange: Table = Table.EmptyTable
@@ -21,7 +16,6 @@ class HiddenSingleStrategyTest {
     private var hiddenSingleRowStrategy = HiddenSingleRowStrategy()
     private var hiddenSingleColumnStrategy = HiddenSingleColumnStrategy()
     private var hiddenSingleBoxStrategy = HiddenSingleBoxStrategy()
-    private var stringViewer = SudokuStringViewer()
 
     @BeforeMethod
     fun setup() {
@@ -35,142 +29,80 @@ class HiddenSingleStrategyTest {
         hiddenSingleColumnStrategy = HiddenSingleColumnStrategy()
 
         hiddenSingleBoxStrategy = HiddenSingleBoxStrategy()
-
-        stringViewer = SudokuStringViewer()
     }
 
     @Test(groups = arrayOf("HiddenSingle", "HiddenSingleRow"))
     fun shouldBeRowReturnInsertChanges() {
-        hiddenSingleRowStrategy.updateTable(table)
-
-        val actualChange = hiddenSingleRowStrategy.getAnyChange()
-
-        assertEquals(actualChange::class, InsertChange::class, "should be insert")
-        assertEquals(actualChange.hasChange(), true, "should have change")
+        strategyInsertTest(hiddenSingleRowStrategy, table)
     }
 
     @Test(groups = arrayOf("HiddenSingle", "HiddenSingleRow"))
     fun shouldBeRowReturnZeroChanges() {
-        hiddenSingleRowStrategy.updateTable(tableWithoutChange)
-
-        val actualChange = hiddenSingleRowStrategy.getAnyChange()
-
-        assertEquals(actualChange::class, ZeroChange::class, "should be zero")
-        assertEquals(actualChange.hasChange(), false, "should not have change")
+        strategyZeroTest(hiddenSingleRowStrategy, tableWithoutChange)
     }
 
     @Test(groups = arrayOf("HiddenSingle", "HiddenSingleRow"))
     fun shouldBeRowRightChange() {
-        hiddenSingleRowStrategy.updateTable(table)
-
-        val actualChange = hiddenSingleRowStrategy.getAnyChange()
-        val newTable = actualChange.apply(table)
-        stringViewer.view(newTable)
-
-        assertEquals(
-                stringViewer.getString(),
+        strategyApplyChangeTest(
+                hiddenSingleRowStrategy,
+                table,
                 "002080400850604200740000000009173840000462000004958000000000025005806014006090300",
                 "should be change '4'")
     }
 
     @Test(groups = arrayOf("HiddenSingle", "HiddenSingleColumn"))
     fun shouldBeColumnReturnInsertChanges() {
-        hiddenSingleColumnStrategy.updateTable(table)
-
-        val actualChange = hiddenSingleColumnStrategy.getAnyChange()
-
-        assertEquals(actualChange::class, InsertChange::class, "should be insert")
-        assertEquals(actualChange.hasChange(), true, "should have change")
+        strategyInsertTest(hiddenSingleColumnStrategy, table)
     }
 
     @Test(groups = arrayOf("HiddenSingle", "HiddenSingleColumn"))
     fun shouldBeColumnReturnZeroChanges() {
-        hiddenSingleColumnStrategy.updateTable(tableWithoutChange)
-
-        val actualChange = hiddenSingleColumnStrategy.getAnyChange()
-
-        assertEquals(actualChange::class, ZeroChange::class, "should be zero")
-        assertEquals(actualChange.hasChange(), false, "should not have change")
+        strategyZeroTest(hiddenSingleColumnStrategy, tableWithoutChange)
     }
 
     @Test(groups = arrayOf("HiddenSingle", "HiddenSingleColumn"))
     fun shouldBeColumnRightChange() {
-        hiddenSingleColumnStrategy.updateTable(table)
-
-        val actualChange = hiddenSingleColumnStrategy.getAnyChange()
-        val newTable = actualChange.apply(table)
-        stringViewer.view(newTable)
-
-        assertEquals(
-                stringViewer.getString(),
+        strategyApplyChangeTest(
+                hiddenSingleColumnStrategy,
+                table,
                 "002080400850604200740000000009173800000462000004958000000040025005806014006090300",
                 "should be change '4'")
     }
 
     @Test(groups = arrayOf("HiddenSingle", "HiddenSingleBox"))
     fun shouldBeBoxReturnInsertChanges() {
-        hiddenSingleBoxStrategy.updateTable(table)
-
-        val actualChange = hiddenSingleBoxStrategy.getAnyChange()
-
-        assertEquals(actualChange::class, InsertChange::class, "should be insert")
-        assertEquals(actualChange.hasChange(), true, "should have change")
+        strategyInsertTest(hiddenSingleBoxStrategy, table)
     }
 
     @Test(groups = arrayOf("HiddenSingle", "HiddenSingleBox"))
     fun shouldBeBoxReturnZeroChanges() {
-        hiddenSingleBoxStrategy.updateTable(tableWithoutChange)
-
-        val actualChange = hiddenSingleBoxStrategy.getAnyChange()
-
-        assertEquals(actualChange::class, ZeroChange::class, "should be zero")
-        assertEquals(actualChange.hasChange(), false, "should not have change")
+        strategyZeroTest(hiddenSingleBoxStrategy, tableWithoutChange)
     }
 
     @Test(groups = arrayOf("HiddenSingle", "HiddenSingleBox"))
     fun shouldBeBoxRightChange() {
-        hiddenSingleBoxStrategy.updateTable(table)
-
-        val actualChange = hiddenSingleBoxStrategy.getAnyChange()
-        val newTable = actualChange.apply(table)
-        stringViewer.view(newTable)
-
-        assertEquals(
-                stringViewer.getString(),
+        strategyApplyChangeTest(
+                hiddenSingleBoxStrategy,
+                table,
                 "002080400850604200740000000009173800000462000004958000000040025005806014006090300",
                 "should be change '4'")
     }
 
     @Test(groups = arrayOf("HiddenSingle"))
     fun shouldBeReturnInsertChanges() {
-        hiddenSingleStrategy.updateTable(table)
-
-        val actualChange = hiddenSingleStrategy.getAnyChange()
-
-        assertEquals(actualChange::class, CompositeChange::class, "should be CompositeChange > insert")
-        assertEquals(actualChange.hasChange(), true, "should have change")
+        strategyCompositeInsertTest(hiddenSingleStrategy, table)
     }
 
     @Test(groups = arrayOf("HiddenSingle"))
     fun shouldBeReturnZeroChanges() {
-        hiddenSingleStrategy.updateTable(tableWithoutChange)
-
-        val actualChange = hiddenSingleStrategy.getAnyChange()
-
-        assertEquals(actualChange::class, ZeroChange::class, "should be zero")
-        assertEquals(actualChange.hasChange(), false, "should not have change")
+        strategyZeroTest(hiddenSingleStrategy, tableWithoutChange)
     }
 
     @Test(groups = arrayOf("HiddenSingle"))
     fun shouldBeRightChange() {
-        hiddenSingleStrategy.updateTable(table)
-
-        val actualChange = hiddenSingleStrategy.getAnyChange()
-        val newTable = actualChange.apply(table)
-        stringViewer.view(newTable)
-
-        assertEquals(
-                stringViewer.getString(),
+        strategyApplyChangeTest(
+                hiddenSingleStrategy,
+                table,
                 "002080400850604200740000000009173840000462000004958000000000025005806014006090300",
                 "should be change '4'")
     }
