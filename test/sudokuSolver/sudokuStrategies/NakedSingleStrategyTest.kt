@@ -15,17 +15,17 @@ class NakedSingleStrategyTest : StrategyTest() {
         nakedSingleStrategy = NakedSingleStrategy()
     }
 
-    @Test(groups = arrayOf("NakedSingle"))
+    @Test(groups = ["NakedSingle"])
     fun shouldBeReturnInsertChanges() {
         strategyInsertTest(nakedSingleStrategy, table)
     }
 
-    @Test(groups = arrayOf("NakedSingle"))
+    @Test(groups = ["NakedSingle"])
     fun shouldBeReturnZeroChanges() {
         strategyZeroTest(nakedSingleStrategy, tableWithoutChange)
     }
 
-    @Test(groups = arrayOf("NakedSingle"))
+    @Test(groups = ["NakedSingle"])
     fun shouldBeRightChange() {
         strategyApplyChangeTest(
                 nakedSingleStrategy,
@@ -34,7 +34,7 @@ class NakedSingleStrategyTest : StrategyTest() {
                 "should be change '1'")
     }
 
-    @Test(groups = arrayOf("NakedSingle", "Pilot"))
+    @Test(groups = ["NakedSingle", "Pilot"])
     fun shouldBeRightChangeThen() {
         nakedSingleStrategy.updateTable(table)
 

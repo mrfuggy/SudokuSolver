@@ -23,17 +23,17 @@ class HiddenSingleStrategyTest : StrategyTest() {
         hiddenSingleBoxStrategy = HiddenSingleBoxStrategy()
     }
 
-    @Test(groups = arrayOf("HiddenSingle", "HiddenSingleRow"))
+    @Test(groups = ["HiddenSingle", "HiddenSingleRow"])
     fun shouldBeRowReturnInsertChanges() {
         strategyInsertTest(hiddenSingleRowStrategy, table)
     }
 
-    @Test(groups = arrayOf("HiddenSingle", "HiddenSingleRow"))
+    @Test(groups = ["HiddenSingle", "HiddenSingleRow"])
     fun shouldBeRowReturnZeroChanges() {
         strategyZeroTest(hiddenSingleRowStrategy, tableWithoutChange)
     }
 
-    @Test(groups = arrayOf("HiddenSingle", "HiddenSingleRow"))
+    @Test(groups = ["HiddenSingle", "HiddenSingleRow"])
     fun shouldBeRowRightChange() {
         strategyApplyChangeTest(
                 hiddenSingleRowStrategy,
@@ -42,17 +42,17 @@ class HiddenSingleStrategyTest : StrategyTest() {
                 "should be change '4'")
     }
 
-    @Test(groups = arrayOf("HiddenSingle", "HiddenSingleColumn"))
+    @Test(groups = ["HiddenSingle", "HiddenSingleColumn"])
     fun shouldBeColumnReturnInsertChanges() {
         strategyInsertTest(hiddenSingleColumnStrategy, table)
     }
 
-    @Test(groups = arrayOf("HiddenSingle", "HiddenSingleColumn"))
+    @Test(groups = ["HiddenSingle", "HiddenSingleColumn"])
     fun shouldBeColumnReturnZeroChanges() {
         strategyZeroTest(hiddenSingleColumnStrategy, tableWithoutChange)
     }
 
-    @Test(groups = arrayOf("HiddenSingle", "HiddenSingleColumn"))
+    @Test(groups = ["HiddenSingle", "HiddenSingleColumn"])
     fun shouldBeColumnRightChange() {
         strategyApplyChangeTest(
                 hiddenSingleColumnStrategy,
@@ -61,17 +61,17 @@ class HiddenSingleStrategyTest : StrategyTest() {
                 "should be change '4'")
     }
 
-    @Test(groups = arrayOf("HiddenSingle", "HiddenSingleBox"))
+    @Test(groups = ["HiddenSingle", "HiddenSingleBox"])
     fun shouldBeBoxReturnInsertChanges() {
         strategyInsertTest(hiddenSingleBoxStrategy, table)
     }
 
-    @Test(groups = arrayOf("HiddenSingle", "HiddenSingleBox"))
+    @Test(groups = ["HiddenSingle", "HiddenSingleBox"])
     fun shouldBeBoxReturnZeroChanges() {
         strategyZeroTest(hiddenSingleBoxStrategy, tableWithoutChange)
     }
 
-    @Test(groups = arrayOf("HiddenSingle", "HiddenSingleBox"))
+    @Test(groups = ["HiddenSingle", "HiddenSingleBox"])
     fun shouldBeBoxRightChange() {
         strategyApplyChangeTest(
                 hiddenSingleBoxStrategy,
@@ -80,17 +80,17 @@ class HiddenSingleStrategyTest : StrategyTest() {
                 "should be change '4'")
     }
 
-    @Test(groups = arrayOf("HiddenSingle"))
+    @Test(groups = ["HiddenSingle"])
     fun shouldBeReturnInsertChanges() {
         strategyCompositeInsertTest(hiddenSingleStrategy, table)
     }
 
-    @Test(groups = arrayOf("HiddenSingle"))
+    @Test(groups = ["HiddenSingle"])
     fun shouldBeReturnZeroChanges() {
         strategyZeroTest(hiddenSingleStrategy, tableWithoutChange)
     }
 
-    @Test(groups = arrayOf("HiddenSingle"))
+    @Test(groups = ["HiddenSingle"])
     fun shouldBeRightChange() {
         strategyApplyChangeTest(
                 hiddenSingleStrategy,

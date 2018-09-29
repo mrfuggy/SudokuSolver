@@ -8,7 +8,7 @@ import sudokuSolver.cellChanges.ZeroChange
 class NakedSingleStrategy : BaseSudokuStrategy(), SudokuStrategy {
 
     override fun getAnyChange(): CellChange =
-            SudokuTable
+            sudokuTable
                     .getCellEnumerator()
                     .firstOrNull { it.candidates.size == 1 }
                     ?.let { InsertChange(it.index, it.candidates.first(), this) }

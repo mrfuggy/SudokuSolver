@@ -13,7 +13,7 @@ open class BaseHiddenSingleStrategy(private val getEnumeration: (Table, Int) -> 
     fun getAnyChange(strategy: SudokuStrategy): CellChange {
         for (num in 0..8) {
             for (i in 0..8) {
-                val hiddenVariants = getEnumeration(SudokuTable, i)
+                val hiddenVariants = getEnumeration(sudokuTable, i)
                         .filter { it.value == Table.EmptyCell }
                         .filter { it.candidates.contains(num.toByte()) }
                         .map { it.index }

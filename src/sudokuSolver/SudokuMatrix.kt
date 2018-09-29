@@ -34,7 +34,7 @@ class SudokuMatrix {
     fun getBoxValues(boxIndex: Int) = matrix
             .filter { it.key.getBoxIndex() == boxIndex }
 
-    private fun getMatrix(table: List<List<Byte>>): Map<Point, Byte> = table
+    private fun getMatrix(table: List<List<Byte>>) = table
             .withIndex()
             .flatMap { (rowIndex, row)
                 ->

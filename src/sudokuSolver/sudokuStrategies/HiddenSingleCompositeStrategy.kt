@@ -9,18 +9,17 @@ import sudokuSolver.sudokuStrategies.hiddenSingle.HiddenSingleRowStrategy
 
 class HiddenSingleCompositeStrategy : SudokuStrategy {
     override fun incChange() {
-        InnerStrategies.incChange()
+        innerStrategies.incChange()
     }
 
     override fun updateTable(sudokuTable: Table) {
-        InnerStrategies.updateTable(sudokuTable)
+        innerStrategies.updateTable(sudokuTable)
     }
 
-    private val InnerStrategies: CompositeStrategy
-            = CompositeStrategy()
+    private val innerStrategies: CompositeStrategy = CompositeStrategy()
             .addStrategy(HiddenSingleRowStrategy())
             .addStrategy(HiddenSingleColumnStrategy())
             .addStrategy(HiddenSingleBoxStrategy())
 
-    override fun getAnyChange(): CellChange = InnerStrategies.getAnyChange()
+    override fun getAnyChange(): CellChange = innerStrategies.getAnyChange()
 }

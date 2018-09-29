@@ -4,10 +4,10 @@ import sudokuSolver.cellChanges.ZeroChange
 
 class SudokuSolver(private var sudokuTable: Table) {
 
-    private val Strategies: MutableList<SudokuStrategy> = mutableListOf()
+    private val strategies: MutableList<SudokuStrategy> = mutableListOf()
 
     fun addStrategy(strategy: SudokuStrategy) {
-        Strategies.add(strategy)
+        strategies.add(strategy)
     }
 
     fun getTable() = sudokuTable
@@ -15,7 +15,7 @@ class SudokuSolver(private var sudokuTable: Table) {
     fun solve() {
         var changed = false
         while (!changed && sudokuTable.hasEmptyCell()) {
-            val change = Strategies
+            val change = strategies
                     .map {
                         it.updateTable(sudokuTable)
                         it.getAnyChange()

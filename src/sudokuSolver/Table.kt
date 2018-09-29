@@ -2,14 +2,14 @@ package sudokuSolver
 
 class Table {
 
-    private val SudokuTable: List<List<Byte>>
-    private val Candidates: SudokuCandidates
-    private val Matrix: SudokuMatrix
+    private val sudokuTable: List<List<Byte>>
+    private val candidates: SudokuCandidates
+    private val matrix: SudokuMatrix
 
     constructor(table: List<List<Byte>>) {
-        SudokuTable = table
-        Matrix = SudokuMatrix(table)
-        Candidates = SudokuCandidates(Matrix)
+        sudokuTable = table
+        matrix = SudokuMatrix(table)
+        candidates = SudokuCandidates(matrix)
 
         if (!validate()) {
             throw IllegalStateException("sudoku invalid")
@@ -17,57 +17,57 @@ class Table {
     }
 
     private constructor(table: List<List<Byte>>, matrix: SudokuMatrix, candidates: SudokuCandidates) {
-        Matrix = matrix
-        Candidates = candidates
-        SudokuTable = table
+        this.matrix = matrix
+        this.candidates = candidates
+        sudokuTable = table
     }
 
-    private fun validate() = Matrix
+    private fun validate() = matrix
             .getAllValues()
             .filter { it.value == EmptyCell }
             .any { getCandidates(it.key.rowIndex, it.key.columnIndex).isEmpty() }
             .not()
 
-    private fun getCandidates(rowIndex: Int, columnIndex: Int) = Candidates.getValue(Point(rowIndex, columnIndex))
+    private fun getCandidates(rowIndex: Int, columnIndex: Int) = candidates.getValue(Point(rowIndex, columnIndex))
 
-    fun getCellEnumerator() = Matrix
+    fun getCellEnumerator() = matrix
             .getAllValues()
             .map { getCell(it) }
 
-    fun getRowEnumerator(rowIndex: Int) = Matrix
+    fun getRowEnumerator(rowIndex: Int) = matrix
             .getRowValues(rowIndex)
             .map { getCell(it) }
 
-    fun getColumnEnumerator(columnIndex: Int) = Matrix
+    fun getColumnEnumerator(columnIndex: Int) = matrix
             .getColumnValues(columnIndex)
             .map { getCell(it) }
 
-    fun getBoxEnumerator(boxIndex: Int) = Matrix
+    fun getBoxEnumerator(boxIndex: Int) = matrix
             .getBoxValues(boxIndex)
             .map { getCell(it) }
 
     private fun getCell(it: Map.Entry<Point, Byte>) =
-            Cell(it.key, it.value, Candidates.getValue(it.key))
+            Cell(it.key, it.value, candidates.getValue(it.key))
 
 
-    fun hasEmptyCell() = Matrix.hasEmptyCell()
+    fun hasEmptyCell() = matrix.hasEmptyCell()
 
     companion object {
         val EmptyTable = Table(listOf())
-        val EmptyCell = 0.toByte()
+        const val EmptyCell = 0.toByte()
     }
 
     fun insert(index: Point, value: Byte): Table {
-        val table = SudokuTable.insert(index, value)
-        val matrix = Matrix.insert(index, value)
-        val candidates = Candidates.excludeAll(index, value)
+        val table = sudokuTable.insert(index, value)
+        val matrix = matrix.insert(index, value)
+        val candidates = candidates.excludeAll(index, value)
 
         return Table(table, matrix, candidates)
     }
 
     fun excludeCandidate(index: Point, value: Byte): Table {
-        val candidates = Candidates.excludeExact(index, value)
-        return Table(SudokuTable, Matrix, candidates)
+        val candidates = candidates.excludeExact(index, value)
+        return Table(sudokuTable, matrix, candidates)
     }
 }
 

@@ -4,15 +4,15 @@ import sudokuSolver.Table
 
 open class BaseSudokuStrategy {
 
-    protected var SudokuTable: Table = sudokuSolver.Table.EmptyTable
+    protected var sudokuTable: Table = sudokuSolver.Table.EmptyTable
 
-    private var ChangeCount = 0
+    private var changeCount = 0
 
     open fun updateTable(sudokuTable: Table) {
-        this.SudokuTable = sudokuTable
+        this.sudokuTable = sudokuTable
     }
 
     fun incChange() {
-        ChangeCount++
+        changeCount++
     }
 }

@@ -17,7 +17,7 @@ class PointTest {
             arrayOf(7, 7, 8)
     )
 
-    @Test(groups = arrayOf("PointTest"), dataProvider = "boxIndexData")
+    @Test(groups = ["PointTest"], dataProvider = "boxIndexData")
     fun shouldBeGetBoxIndex(rowIndex: Int, columnIndex: Int, expected: Int) {
         val p = Point(rowIndex, columnIndex)
 
@@ -38,7 +38,7 @@ class PointTest {
             arrayOf(5, 5, 50)
     )
 
-    @Test(groups = arrayOf("PointTest"), dataProvider = "cellIndexData")
+    @Test(groups = ["PointTest"], dataProvider = "cellIndexData")
     fun shouldBeGetCellIndex(rowIndex: Int, columnIndex: Int, expected: Int) {
         val p = Point(rowIndex, columnIndex)
 

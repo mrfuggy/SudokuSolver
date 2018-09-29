@@ -7,24 +7,23 @@ import sudokuSolver.cellChanges.CompositeChange
 import sudokuSolver.cellChanges.ZeroChange
 
 class CompositeStrategy : BaseSudokuStrategy(), SudokuStrategy {
-    private val Strategies: MutableList<SudokuStrategy> = mutableListOf()
+    private val strategies: MutableList<SudokuStrategy> = mutableListOf()
 
     fun addStrategy(sudokuStrategy: SudokuStrategy): CompositeStrategy {
-        Strategies.add(sudokuStrategy)
+        strategies.add(sudokuStrategy)
         return this
     }
 
     override fun updateTable(sudokuTable: Table) {
-        Strategies
+        strategies
                 .forEach { it.updateTable(sudokuTable) }
     }
 
     override fun getAnyChange(): CellChange {
-        return Strategies
+        return strategies
                 .map { it.getAnyChange() }
                 .firstOrNull { it.hasChange() }
                 ?.let { CompositeChange(it, this) }
                 ?: ZeroChange()
     }
 }
-

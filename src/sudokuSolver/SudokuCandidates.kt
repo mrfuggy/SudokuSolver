@@ -12,7 +12,7 @@ class SudokuCandidates {
         this.candidates = candidates
     }
 
-    fun getValue(point: Point): Set<Byte> = candidates.getOrDefault(point, setOf())
+    fun getValue(point: Point) = candidates.getOrDefault(point, setOf())
 
     fun excludeAll(index: Point, value: Byte) = candidates
             .excludeSelfCell(index)
@@ -22,7 +22,7 @@ class SudokuCandidates {
             .forward { SudokuCandidates(it) }
 
     fun excludeExact(index: Point, value: Byte) = candidates
-            .excludeIn(index, value) { 9 * it.rowIndex + it.columnIndex }
+            .excludeIn(index, value) { it.getCellIndex() }
             .forward { SudokuCandidates(it) }
 
     private fun getValues(values: Map<Point, Byte>): Set<Byte> = values
@@ -56,7 +56,7 @@ class SudokuCandidates {
                 }
             }
 
-    private fun fillCandidates(sudokuMatrix: SudokuMatrix): Map<Point, Set<Byte>> =
+    private fun fillCandidates(sudokuMatrix: SudokuMatrix) =
             sudokuMatrix
                     .getAllValues()
                     .map { cell ->

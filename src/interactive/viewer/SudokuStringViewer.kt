@@ -10,7 +10,7 @@ class SudokuStringViewer : SudokuViewer {
     override fun view(table: Table) {
         str = table
                 .getCellEnumerator()
-                .joinToString(separator = "") { it.value.toString() }
+                .joinToString("") { it.value.toString() }
     }
 
     fun getString() = str
