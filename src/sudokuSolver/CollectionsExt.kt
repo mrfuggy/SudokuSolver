@@ -15,3 +15,9 @@ inline fun <T, R> Iterable<T>.firstOrDefault(defaultValue: () -> R, predicate: (
 
     return defaultValue()
 }
+
+fun List<List<Byte>>.insert(index: Point, value: Byte): List<List<Byte>> {
+    val table = this.map { it.toMutableList() }.toMutableList()
+    table[index.rowIndex][index.columnIndex] = value
+    return table
+}

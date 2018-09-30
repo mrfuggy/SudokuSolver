@@ -26,4 +26,6 @@ class CompositeStrategy : BaseSudokuStrategy(), SudokuStrategy {
                 ?.let { CompositeChange(it, this) }
                 ?: ZeroChange()
     }
+
+    override fun getName() = "Composite"
 }

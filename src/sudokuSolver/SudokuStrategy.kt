@@ -4,4 +4,5 @@ interface SudokuStrategy {
     fun updateTable(sudokuTable: Table)
     fun getAnyChange(): CellChange
     fun incChange()
+    fun getName(): String
 }

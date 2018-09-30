@@ -1,0 +1,7 @@
+Insert 2 at [4,5] by Hidden Single in row
+Insert 3 at [5,1] by Hidden Single in box
+Insert 4 at [1,1] by Naked Single
+Insert 4 at [2,9] by Hidden Single in row
+Insert 5 at [5,9] by Hidden Single in box
+Insert 7 at [9,9] by Naked Single
+Insert 7 at [3,8] by Hidden Single in column

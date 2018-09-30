@@ -11,4 +11,6 @@ data class Point(val rowIndex: Int, val columnIndex: Int) {
                 in 0..8 -> index / 3
                 else -> throw IllegalArgumentException("index")
             }
+
+    override fun toString() = "[${rowIndex + 1},${columnIndex + 1}]"
 }

@@ -42,6 +42,14 @@ class HiddenSingleStrategyTest : StrategyTest() {
                 "should be change '4'")
     }
 
+    @Test(groups = ["HiddenSingle", "HiddenSingleRow", "VerboseOutput"])
+    fun shouldRowPrintVerboseLog() {
+        strategyPrintVerboseLog(
+                hiddenSingleRowStrategy,
+                table,
+                "Insert 4 at [4,8] by Hidden Single in row. 4 only one in row 4")
+    }
+
     @Test(groups = ["HiddenSingle", "HiddenSingleColumn"])
     fun shouldBeColumnReturnInsertChanges() {
         strategyInsertTest(hiddenSingleColumnStrategy, table)
@@ -59,6 +67,14 @@ class HiddenSingleStrategyTest : StrategyTest() {
                 table,
                 "002080400850604200740000000009173800000462000004958000000040025005806014006090300",
                 "should be change '4'")
+    }
+
+    @Test(groups = ["HiddenSingle", "HiddenSingleColumn", "VerboseOutput"])
+    fun shouldColumnPrintVerboseLog() {
+        strategyPrintVerboseLog(
+                hiddenSingleColumnStrategy,
+                table,
+                "Insert 4 at [7,5] by Hidden Single in column. 4 only one in column 5")
     }
 
     @Test(groups = ["HiddenSingle", "HiddenSingleBox"])
@@ -80,6 +96,14 @@ class HiddenSingleStrategyTest : StrategyTest() {
                 "should be change '4'")
     }
 
+    @Test(groups = ["HiddenSingle", "HiddenSingleBox", "VerboseOutput"])
+    fun shouldBoxPrintVerboseLog() {
+        strategyPrintVerboseLog(
+                hiddenSingleBoxStrategy,
+                table,
+                "Insert 4 at [7,5] by Hidden Single in box. 4 only one in box 6")
+    }
+
     @Test(groups = ["HiddenSingle"])
     fun shouldBeReturnInsertChanges() {
         strategyCompositeInsertTest(hiddenSingleStrategy, table)
@@ -97,5 +121,13 @@ class HiddenSingleStrategyTest : StrategyTest() {
                 table,
                 "002080400850604200740000000009173840000462000004958000000000025005806014006090300",
                 "should be change '4'")
+    }
+
+    @Test(groups = ["HiddenSingle", "VerboseOutput"])
+    fun shouldPrintVerboseLog() {
+        strategyPrintVerboseLog(
+                hiddenSingleStrategy,
+                table,
+                "Insert 4 at [4,8] by Hidden Single in row. 4 only one in row 4")
     }
 }

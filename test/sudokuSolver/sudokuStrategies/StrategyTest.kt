@@ -1,8 +1,10 @@
 package sudokuSolver.sudokuStrategies
 
 import interactive.loader.SudokuStringLoader
+import interactive.verbose.ListVerboseLogger
 import interactive.viewer.SudokuStringViewer
 import org.testng.Assert.assertEquals
+import sudokuSolver.SolverParameters
 import sudokuSolver.SudokuStrategy
 import sudokuSolver.Table
 import sudokuSolver.batch
@@ -13,6 +15,10 @@ import sudokuSolver.cellChanges.ZeroChange
 abstract class StrategyTest {
 
     protected var stringViewer = SudokuStringViewer()
+    private val solverParameters = SolverParameters(
+            verboseOutput = true,
+            moreVerboseOutput = true)
+    private val verboseLogger = ListVerboseLogger(solverParameters)
 
     protected fun strategyInsertTest(strategy: SudokuStrategy, tableData: Table) {
         strategy.updateTable(tableData)
@@ -53,6 +59,18 @@ abstract class StrategyTest {
         stringViewer.view(newTable)
 
         assertEquals(stringViewer.getString(), expected, message)
+    }
+
+    protected fun strategyPrintVerboseLog(
+            strategy: SudokuStrategy,
+            tableData: Table,
+            expected: String) {
+        strategy.updateTable(tableData)
+
+        val change = strategy.getAnyChange()
+        change.printVerboseLog(verboseLogger)
+
+        assertEquals(verboseLogger.getLog().last(), expected, "verbose log")
     }
 
     protected fun getTable(line: String): Table {

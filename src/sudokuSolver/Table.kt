@@ -11,7 +11,7 @@ class Table {
         matrix = SudokuMatrix(table)
         candidates = SudokuCandidates(matrix)
 
-        if (!validate()) {
+        if (!validateCells() || !validateCandidates()) {
             throw IllegalStateException("sudoku invalid")
         }
     }
@@ -22,13 +22,35 @@ class Table {
         sudokuTable = table
     }
 
-    private fun validate() = matrix
-            .getAllValues()
+    private fun validateCandidates() = getCellEnumerator()
             .filter { it.value == EmptyCell }
-            .any { getCandidates(it.key.rowIndex, it.key.columnIndex).isEmpty() }
-            .not()
+            .all { it.candidates.isNotEmpty() }
 
-    private fun getCandidates(rowIndex: Int, columnIndex: Int) = candidates.getValue(Point(rowIndex, columnIndex))
+    private fun validateCells(): Boolean {
+        val validateRows = validateGroup { getRowEnumerator(it) }
+        val validateColumns = validateGroup { getColumnEnumerator(it) }
+        val validateBox = validateGroup { getBoxEnumerator(it) }
+
+        return validateRows && validateColumns && validateBox
+    }
+
+    private fun validateGroup(getGroup: (Int) -> List<Cell>) = (0..8)
+            .map {
+                getGroup(it)
+                        .forward { validateGroup(it) }
+            }
+            .all { it }
+
+    private fun validateGroup(group: List<Cell>) =
+            group
+                    .filter { it.value != EmptyCell }
+                    .map { it.value }
+                    .count() ==
+                    group
+                            .filter { it.value != EmptyCell }
+                            .map { it.value }
+                            .distinct()
+                            .count()
 
     fun getCellEnumerator() = matrix
             .getAllValues()
@@ -69,10 +91,4 @@ class Table {
         val candidates = candidates.excludeExact(index, value)
         return Table(sudokuTable, matrix, candidates)
     }
-}
-
-private fun List<List<Byte>>.insert(index: Point, value: Byte): List<List<Byte>> {
-    val table = this.map { it.toMutableList() }.toMutableList()
-    table[index.rowIndex][index.columnIndex] = value
-    return table
 }

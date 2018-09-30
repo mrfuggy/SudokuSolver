@@ -1,6 +1,5 @@
 package sudokuSolver.sudokuStrategies
 
-import sudokuSolver.CellChange
 import sudokuSolver.SudokuStrategy
 import sudokuSolver.Table
 import sudokuSolver.sudokuStrategies.hiddenSingle.HiddenSingleBoxStrategy
@@ -21,5 +20,7 @@ class HiddenSingleCompositeStrategy : SudokuStrategy {
             .addStrategy(HiddenSingleColumnStrategy())
             .addStrategy(HiddenSingleBoxStrategy())
 
-    override fun getAnyChange(): CellChange = innerStrategies.getAnyChange()
+    override fun getAnyChange() = innerStrategies.getAnyChange()
+
+    override fun getName() = "Hidden Single"
 }

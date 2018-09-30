@@ -61,4 +61,12 @@ class NakedSingleStrategyTest : StrategyTest() {
                 "039612000000735000020489063305000000700308002000000804260003070000807000800124950",
                 "should be change '8'")
     }
+
+    @Test(groups = ["NakedSingle", "VerboseOutput"])
+    fun shouldPrintVerboseLog() {
+        strategyPrintVerboseLog(
+                nakedSingleStrategy,
+                table,
+                "Insert 1 at [9,4] by Naked Single. Only one candidate at [9,4]")
+    }
 }

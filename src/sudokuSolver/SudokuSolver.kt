@@ -1,8 +1,11 @@
 package sudokuSolver
 
+import interactive.VerboseLogger
 import sudokuSolver.cellChanges.ZeroChange
 
-class SudokuSolver(private var sudokuTable: Table) {
+class SudokuSolver(
+        private var sudokuTable: Table,
+        private val verboseLogger: VerboseLogger) {
 
     private val strategies: MutableList<SudokuStrategy> = mutableListOf()
 
@@ -15,15 +18,22 @@ class SudokuSolver(private var sudokuTable: Table) {
     fun solve() {
         var changed = false
         while (!changed && sudokuTable.hasEmptyCell()) {
-            val change = strategies
-                    .map {
-                        it.updateTable(sudokuTable)
-                        it.getAnyChange()
-                    }
-                    .firstOrNull { it.hasChange() }
-                    ?: ZeroChange()
+            val change = getAnyChange()
             changed = change.hasChange()
-            sudokuTable = change.apply(sudokuTable)
+            change.printVerboseLog(verboseLogger)
+            applyChange(change)
         }
     }
+
+    fun applyChange(change: CellChange) {
+        sudokuTable = change.apply(sudokuTable)
+    }
+
+    fun getAnyChange(): CellChange = strategies
+            .map {
+                it.updateTable(sudokuTable)
+                it.getAnyChange()
+            }
+            .firstOrNull { it.hasChange() }
+            ?: ZeroChange()
 }
