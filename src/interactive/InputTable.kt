@@ -7,8 +7,9 @@ import interactive.verbose.ZeroVerboseLogger
 import interactive.viewer.SudokuConsoleViewer
 import sudokuSolver.SolverParameters
 import sudokuSolver.SudokuSolver
-import sudokuSolver.sudokuStrategies.NakedSingleStrategy
 import sudokuSolver.sudokuStrategies.HiddenSingleCompositeStrategy
+import sudokuSolver.sudokuStrategies.NakedPairCompositeStrategy
+import sudokuSolver.sudokuStrategies.NakedSingleStrategy
 
 fun main(args: Array<String>) {
     val loader =
@@ -24,6 +25,7 @@ fun main(args: Array<String>) {
     val sudokuSolver = SudokuSolver(sudokuTable, verboseLogger)
     sudokuSolver.addStrategy(NakedSingleStrategy())
     sudokuSolver.addStrategy(HiddenSingleCompositeStrategy())
+    sudokuSolver.addStrategy(NakedPairCompositeStrategy())
 
     sudokuSolver.solve()
 

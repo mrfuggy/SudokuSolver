@@ -2,7 +2,7 @@ package sudokuSolver
 
 data class Point(val rowIndex: Int, val columnIndex: Int) {
 
-    fun getBoxIndex() = getBoxIndex(rowIndex) + 3 * getBoxIndex(columnIndex)
+    fun getBoxIndex() = 3 * getBoxIndex(rowIndex) + getBoxIndex(columnIndex)
 
     fun getCellIndex() = rowIndex + columnIndex * 9
 

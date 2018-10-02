@@ -21,7 +21,7 @@ class SudokuMatrix {
             .forward { SudokuMatrix(it) }
 
     fun hasEmptyCell() = matrix
-            .any { it.value == Table.EmptyCell }
+            .any { it.value == Cell.EmptyValue }
 
     fun getAllValues() = matrix
 

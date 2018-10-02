@@ -3,12 +3,13 @@ package sudokuSolver.sudokuStrategies
 import interactive.loader.SudokuStringLoader
 import interactive.verbose.ListVerboseLogger
 import interactive.viewer.SudokuStringViewer
-import org.testng.Assert.assertEquals
+import org.testng.Assert.*
 import sudokuSolver.SolverParameters
 import sudokuSolver.SudokuStrategy
 import sudokuSolver.Table
 import sudokuSolver.batch
 import sudokuSolver.cellChanges.CompositeChange
+import sudokuSolver.cellChanges.ExcludeChange
 import sudokuSolver.cellChanges.InsertChange
 import sudokuSolver.cellChanges.ZeroChange
 
@@ -26,16 +27,25 @@ abstract class StrategyTest {
         val actualChange = strategy.getAnyChange()
 
         assertEquals(actualChange::class, InsertChange::class, "should be insert")
-        assertEquals(actualChange.hasChange(), true, "should have change")
+        assertTrue(actualChange.hasChange(), "should have change")
     }
 
-    protected fun strategyCompositeInsertTest(strategy: SudokuStrategy, tableData: Table) {
+    protected fun strategyCompositeTest(strategy: SudokuStrategy, tableData: Table) {
         strategy.updateTable(tableData)
 
         val actualChange = strategy.getAnyChange()
 
-        assertEquals(actualChange::class, CompositeChange::class, "should be CompositeChange > insert")
-        assertEquals(actualChange.hasChange(), true, "should have change")
+        assertEquals(actualChange::class, CompositeChange::class, "should be CompositeChange > change")
+        assertTrue(actualChange.hasChange(), "should have change")
+    }
+
+    protected fun strategyExcludeTest(strategy: SudokuStrategy, tableData: Table) {
+        strategy.updateTable(tableData)
+
+        val actualChange = strategy.getAnyChange()
+
+        assertEquals(actualChange::class, ExcludeChange::class, "should be exclude")
+        assertTrue(actualChange.hasChange(), "should have change")
     }
 
     protected fun strategyZeroTest(strategy: SudokuStrategy, tableData: Table) {
@@ -44,7 +54,7 @@ abstract class StrategyTest {
         val actualChange = strategy.getAnyChange()
 
         assertEquals(actualChange::class, ZeroChange::class, "should be zero")
-        assertEquals(actualChange.hasChange(), false, "should not have change")
+        assertFalse(actualChange.hasChange(), "should not have change")
     }
 
     protected fun strategyApplyChangeTest(

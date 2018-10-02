@@ -23,7 +23,7 @@ class Table {
     }
 
     private fun validateCandidates() = getCellEnumerator()
-            .filter { it.value == EmptyCell }
+            .filter { it.isEmptyCell() }
             .all { it.candidates.isNotEmpty() }
 
     private fun validateCells(): Boolean {
@@ -43,11 +43,11 @@ class Table {
 
     private fun validateGroup(group: List<Cell>) =
             group
-                    .filter { it.value != EmptyCell }
+                    .filter { it.isEmptyCell().not() }
                     .map { it.value }
                     .count() ==
                     group
-                            .filter { it.value != EmptyCell }
+                            .filter { it.isEmptyCell().not() }
                             .map { it.value }
                             .distinct()
                             .count()
@@ -76,7 +76,6 @@ class Table {
 
     companion object {
         val EmptyTable = Table(listOf())
-        const val EmptyCell = 0.toByte()
     }
 
     fun insert(index: Point, value: Byte): Table {

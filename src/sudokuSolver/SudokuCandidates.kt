@@ -27,7 +27,7 @@ class SudokuCandidates {
 
     private fun getValues(values: Map<Point, Byte>): Set<Byte> = values
             .map { it.value }
-            .filter { it != Table.EmptyCell }
+            .filter { it != Cell.EmptyValue }
             .distinct()
             .toSet()
 
@@ -60,7 +60,7 @@ class SudokuCandidates {
             sudokuMatrix
                     .getAllValues()
                     .map { cell ->
-                        if (cell.value == Table.EmptyCell) {
+                        if (cell.value == Cell.EmptyValue) {
                             Pair(
                                     cell.key,
                                     setOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8, 9)

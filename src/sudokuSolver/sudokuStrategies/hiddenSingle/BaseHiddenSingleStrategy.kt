@@ -1,10 +1,6 @@
 package sudokuSolver.sudokuStrategies.hiddenSingle
 
-import sudokuSolver.Cell
-import sudokuSolver.CellChange
-import sudokuSolver.SudokuStrategy
-import sudokuSolver.Table
-import sudokuSolver.Point
+import sudokuSolver.*
 import sudokuSolver.cellChanges.InsertChange
 import sudokuSolver.cellChanges.ZeroChange
 import sudokuSolver.sudokuStrategies.BaseSudokuStrategy
@@ -16,7 +12,7 @@ abstract class BaseHiddenSingleStrategy(private val getEnumeration: (Table, Int)
         for (num in 0..8) {
             for (i in 0..8) {
                 val hiddenVariants = getEnumeration(sudokuTable, i)
-                        .filter { it.value == Table.EmptyCell }
+                        .filter { it.isEmptyCell() }
                         .filter { it.candidates.contains(num.toByte()) }
                         .map { it.index }
 

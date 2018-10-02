@@ -10,10 +10,10 @@ class PointTest {
     val boxIndexData = arrayOf(
             arrayOf(0, 0, 0),
             arrayOf(2, 2, 0),
-            arrayOf(3, 0, 1),
-            arrayOf(0, 3, 3),
-            arrayOf(0, 6, 6),
-            arrayOf(0, 5, 3),
+            arrayOf(3, 0, 3),
+            arrayOf(0, 3, 1),
+            arrayOf(0, 6, 2),
+            arrayOf(0, 5, 1),
             arrayOf(7, 7, 8)
     )
 
