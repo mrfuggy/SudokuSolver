@@ -11,7 +11,7 @@ class SudokuPair(
         startIndex: Int = 0) {
 
     private var index1 = startIndex - 1
-    private var index2 = startIndex - 2
+    private var index2 = 0
     private var cell1 = Cell.EmptyCell
         get() = getCell(index1)
     private var cell2 = Cell.EmptyCell
@@ -23,7 +23,7 @@ class SudokuPair(
         return candidates
                 .map { getAnyChange(it, candidates) }
                 .firstOrNull { it.hasChange() }
-                ?: ZeroChange()
+                ?: ZeroChange
     }
 
     fun tryFoundPair(): Boolean {
@@ -45,7 +45,7 @@ class SudokuPair(
             .filter { it.isEmptyCell() }
             .firstOrNull { it.candidates.contains(candidate) }
             ?.let { ExcludeChange(it.index, candidate, strategy, getReason(candidates)) }
-            ?: ZeroChange()
+            ?: ZeroChange
 
     private fun getReason(candidates: Set<Byte>) =
             strategy.getReason(

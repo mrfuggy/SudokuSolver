@@ -39,3 +39,9 @@ Insert 6 at [6,9] by Naked Single
 Insert 7 at [2,9] by Naked Single
 Insert 5 at [7,7] by Naked Single
 Insert 4 at [3,7] by Naked Single
+Naked Single: 30
+Hidden Single: 11
+  Hidden Single in row: 6
+  Hidden Single in column: 5
+  Hidden Single in box: 0
+Total: 41

@@ -4,7 +4,7 @@ import interactive.VerboseLogger
 import sudokuSolver.CellChange
 import sudokuSolver.Table
 
-class ZeroChange : CellChange {
+object ZeroChange : CellChange {
     override fun apply(table: Table) = table
 
     override fun hasChange() = false

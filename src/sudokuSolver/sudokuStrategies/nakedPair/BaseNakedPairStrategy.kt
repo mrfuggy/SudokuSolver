@@ -23,7 +23,7 @@ abstract class BaseNakedPairStrategy(private val getEnumeration: (Table, Int) ->
             }
         }
 
-        return ZeroChange()
+        return ZeroChange
     }
 
     abstract fun getReason(pair: Set<Byte>, point1: Point, point2: Point): String

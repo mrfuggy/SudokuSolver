@@ -16,6 +16,13 @@ inline fun <T, R> Iterable<T>.firstOrDefault(defaultValue: () -> R, predicate: (
     return defaultValue()
 }
 
+inline fun <S, T> Iterable<T>.reduce(acc: S, reducer: (acc: S, value: T) -> S): S {
+    this
+            .forEach { reducer(acc, it) }
+
+    return acc
+}
+
 fun List<List<Byte>>.insert(index: Point, value: Byte): List<List<Byte>> {
     val table = this.map { it.toMutableList() }.toMutableList()
     table[index.rowIndex][index.columnIndex] = value

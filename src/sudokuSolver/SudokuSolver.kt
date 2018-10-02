@@ -9,6 +9,8 @@ class SudokuSolver(
 
     private val strategies: MutableList<SudokuStrategy> = mutableListOf()
 
+    private var changeCount = 0
+
     fun addStrategy(strategy: SudokuStrategy) {
         strategies.add(strategy)
     }
@@ -26,6 +28,8 @@ class SudokuSolver(
     }
 
     fun applyChange(change: CellChange) {
+        if (change.hasChange())
+            changeCount++
         sudokuTable = change.apply(sudokuTable)
     }
 
@@ -35,5 +39,11 @@ class SudokuSolver(
                 it.getAnyChange()
             }
             .firstOrNull { it.hasChange() }
-            ?: ZeroChange()
+            ?: ZeroChange
+
+    fun printStat() {
+        strategies
+                .forEach { it.printStat(verboseLogger) }
+        verboseLogger.printStrategyStat("Total", changeCount)
+    }
 }

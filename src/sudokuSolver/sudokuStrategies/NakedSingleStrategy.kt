@@ -13,7 +13,7 @@ class NakedSingleStrategy : BaseSudokuStrategy(), SudokuStrategy {
                     .getCellEnumerator()
                     .firstOrNull { it.candidates.size == 1 }
                     ?.let { InsertChange(it.index, it.candidates.first(), this, getReason(it.index)) }
-                    ?: ZeroChange()
+                    ?: ZeroChange
 
     private fun getReason(point: Point) = "Only one candidate at $point"
 

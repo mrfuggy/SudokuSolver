@@ -9,7 +9,7 @@ abstract class BaseHiddenSingleStrategy(private val getEnumeration: (Table, Int)
         SudokuStrategy {
 
     protected fun getAnyChange(strategy: BaseHiddenSingleStrategy): CellChange {
-        for (num in 0..8) {
+        for (num in 1..9) {
             for (i in 0..8) {
                 val hiddenVariants = getEnumeration(sudokuTable, i)
                         .filter { it.isEmptyCell() }
@@ -25,7 +25,7 @@ abstract class BaseHiddenSingleStrategy(private val getEnumeration: (Table, Int)
                 }
             }
         }
-        return ZeroChange()
+        return ZeroChange
     }
 
     abstract fun getReason(num: Byte, point: Point): String

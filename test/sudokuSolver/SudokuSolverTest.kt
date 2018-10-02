@@ -33,7 +33,10 @@ class SudokuSolverTest : StrategyTest() {
         createSolver(table1)
         val expectedLog = File("test/testData/scenario1.txt").readLines()
 
-        expectedLog.forEach { moveNext(it) }
+        (0..40)
+                .forEach { moveNext(expectedLog[it]) }
+
+        sudokuSolver.printStat()
 
         assertEquals(verboseLogger.getLog(), expectedLog, "verbose log")
     }
@@ -43,7 +46,10 @@ class SudokuSolverTest : StrategyTest() {
         createSolver(table2)
         val expectedLog = File("test/testData/scenario2.txt").readLines()
 
-        expectedLog.forEach { moveNext(it) }
+        (0..6)
+                .forEach { moveNext(expectedLog[it]) }
+
+        sudokuSolver.printStat()
 
         assertEquals(verboseLogger.getLog(), expectedLog, "verbose log")
     }

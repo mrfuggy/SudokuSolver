@@ -1,18 +1,24 @@
 package sudokuSolver.sudokuStrategies
 
+import interactive.VerboseLogger
+import sudokuSolver.SudokuStrategy
 import sudokuSolver.Table
 
-open class BaseSudokuStrategy {
+abstract class BaseSudokuStrategy : SudokuStrategy {
 
     protected var sudokuTable: Table = sudokuSolver.Table.EmptyTable
 
     private var changeCount = 0
 
-    open fun updateTable(sudokuTable: Table) {
+    override fun updateTable(sudokuTable: Table) {
         this.sudokuTable = sudokuTable
     }
 
-    fun incChange() {
+    override fun incChange() {
         changeCount++
+    }
+
+    override fun printStat(verboseLogger: VerboseLogger) {
+        verboseLogger.printStrategyStat(getName(), changeCount)
     }
 }

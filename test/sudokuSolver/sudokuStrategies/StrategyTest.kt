@@ -53,7 +53,7 @@ abstract class StrategyTest {
 
         val actualChange = strategy.getAnyChange()
 
-        assertEquals(actualChange::class, ZeroChange::class, "should be zero")
+        assertEquals(actualChange, ZeroChange, "should be zero")
         assertFalse(actualChange.hasChange(), "should not have change")
     }
 
