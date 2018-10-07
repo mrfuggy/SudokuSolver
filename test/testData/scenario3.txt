@@ -1,0 +1,30 @@
+Insert 2 at [7,2] by Hidden Single in row
+Insert 2 at [2,1] by Hidden Single in row
+Insert 2 at [5,7] by Hidden Single in row
+Insert 3 at [8,6] by Hidden Single in row
+Insert 6 at [3,6] by Naked Single
+Insert 9 at [4,2] by Hidden Single in row
+Insert 9 at [9,7] by Hidden Single in row
+Insert 6 at [9,9] by Hidden Single in row
+Insert 9 at [8,4] by Hidden Single in row
+Insert 9 at [2,8] by Hidden Single in row
+Insert 6 at [5,4] by Hidden Single in column
+Exclude 6 at [4,7] by Locked Candidate
+Exclude 6 at [6,7] by Locked Candidate
+Exclude 8 at [5,8] by Locked Candidate
+Exclude 4 at [1,5] by Locked Candidate
+Exclude 4 at [3,5] by Locked Candidate
+Exclude 5 at [8,7] by Locked Candidate
+Exclude 5 at [8,8] by Locked Candidate
+Exclude 4 at [8,2] by Locked Candidate
+Naked Single: 1
+Hidden Single: 10
+  Hidden Single in row: 9
+  Hidden Single in column: 1
+  Hidden Single in box: 0
+Locked Candidate: 8
+Naked Pair: 0
+  Naked Pair in row: 0
+  Naked Pair in column: 0
+  Naked Pair in box: 0
+Total: 19

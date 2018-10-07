@@ -51,7 +51,7 @@ class SudokuCandidates {
     private fun Map<Point, Set<Byte>>.excludeIn(index: Point, value: Byte, intoGroup: (Point) -> Int) = this
             .mapValues {
                 when (intoGroup(index)) {
-                    intoGroup(it.key) -> it.value.filter { it != value }.toSet()
+                    intoGroup(it.key) -> it.value.filter { v -> v != value }.toSet()
                     else -> it.value
                 }
             }

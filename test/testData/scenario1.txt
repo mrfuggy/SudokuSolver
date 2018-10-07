@@ -44,4 +44,9 @@ Hidden Single: 11
   Hidden Single in row: 6
   Hidden Single in column: 5
   Hidden Single in box: 0
+Locked Candidate: 0
+Naked Pair: 0
+  Naked Pair in row: 0
+  Naked Pair in column: 0
+  Naked Pair in box: 0
 Total: 41

@@ -11,6 +11,10 @@ class Table {
         matrix = SudokuMatrix(table)
         candidates = SudokuCandidates(matrix)
 
+        validateTable()
+    }
+
+    private fun validateTable() {
         if (!validateCells() || !validateCandidates()) {
             throw IllegalStateException("sudoku invalid")
         }
@@ -35,8 +39,8 @@ class Table {
     }
 
     private fun validateGroup(getGroup: (Int) -> List<Cell>) = (0..8)
-            .map {
-                getGroup(it)
+            .map { groupId ->
+                getGroup(groupId)
                         .forward { validateGroup(it) }
             }
             .all { it }

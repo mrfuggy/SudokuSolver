@@ -8,6 +8,7 @@ import interactive.viewer.SudokuConsoleViewer
 import sudokuSolver.SolverParameters
 import sudokuSolver.SudokuSolver
 import sudokuSolver.sudokuStrategies.HiddenSingleCompositeStrategy
+import sudokuSolver.sudokuStrategies.LockedCandidateStrategy
 import sudokuSolver.sudokuStrategies.NakedPairCompositeStrategy
 import sudokuSolver.sudokuStrategies.NakedSingleStrategy
 
@@ -25,6 +26,7 @@ fun main(args: Array<String>) {
     val sudokuSolver = SudokuSolver(sudokuTable, verboseLogger)
     sudokuSolver.addStrategy(NakedSingleStrategy())
     sudokuSolver.addStrategy(HiddenSingleCompositeStrategy())
+    sudokuSolver.addStrategy(LockedCandidateStrategy())
     sudokuSolver.addStrategy(NakedPairCompositeStrategy())
 
     sudokuSolver.solve()

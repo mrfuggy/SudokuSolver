@@ -5,9 +5,16 @@ Insert 4 at [2,9] by Hidden Single in row
 Insert 5 at [5,9] by Hidden Single in box
 Insert 7 at [9,9] by Naked Single
 Insert 7 at [3,8] by Hidden Single in column
-Naked Single: 2
-Hidden Single: 5
+Insert 9 at [5,8] by Hidden Single in column
+Insert 3 at [6,7] by Naked Single
+Naked Single: 3
+Hidden Single: 6
   Hidden Single in row: 2
-  Hidden Single in column: 1
+  Hidden Single in column: 2
   Hidden Single in box: 2
-Total: 7
+Locked Candidate: 0
+Naked Pair: 0
+  Naked Pair in row: 0
+  Naked Pair in column: 0
+  Naked Pair in box: 0
+Total: 9
